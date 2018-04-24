@@ -20,7 +20,8 @@ var getMaxElement = function (arr) {
     if (arr[i] > maxElement) {
       maxElement = arr[i];
     }
-  } return maxElement;
+  }
+  return maxElement;
 };
 
 var colorizeBarsByName = function (name) {
@@ -29,7 +30,8 @@ var colorizeBarsByName = function (name) {
     barColor = 'rgba(255, 0, 0, 1)';
   } else {
     barColor = 'rgba(30, 27, 94, ' + Math.random();
-  } return barColor;
+  }
+  return barColor;
 };
 
 var renderCloud = function (ctx, x, y, color) {
@@ -54,17 +56,17 @@ window.renderStatistics = function (ctx, names, times) {
   var maxTime = getMaxElement(times);
   var heightHistogram = 150;
   for (var i = 0; i < names.length; i++) {
+    var gapOnAxisX = CLOUD_X + GAP + FOUNT_GAP + (GAP + TEXT_WIDTH + BAR_WIDTH) * i;
     // вывод имен игроков
-    ctx.fillText(names[i], CLOUD_X + GAP + FOUNT_GAP + (GAP + TEXT_WIDTH + BAR_WIDTH) * i,
+    ctx.fillText(names[i], gapOnAxisX,
         CLOUD_HEIGHT - GAP);
     // вывод столбцов с результатами
     ctx.fillStyle = colorizeBarsByName(names[i]);
-    ctx.fillRect(CLOUD_X + GAP + FOUNT_GAP + (GAP + TEXT_WIDTH + BAR_WIDTH) * i,
-        CLOUD_HEIGHT - CLOUD_Y - FOUNT_GAP,
+    ctx.fillRect(gapOnAxisX, CLOUD_HEIGHT - CLOUD_Y - FOUNT_GAP,
         BAR_WIDTH, -(heightHistogram * times[i]) / maxTime);
     ctx.fillStyle = 'rgba(0, 0, 0, 1)'; // возвращаю черный цвет
     // вывод времени
-    ctx.fillText(Math.round(times[i]), CLOUD_X + GAP + FOUNT_GAP + (GAP + TEXT_WIDTH + BAR_WIDTH) * i,
+    ctx.fillText(Math.round(times[i]), gapOnAxisX,
         CLOUD_HEIGHT - FOUNT_GAP - CLOUD_Y - FOUNT_GAP - (heightHistogram * times[i]) / maxTime);
   }
 };
